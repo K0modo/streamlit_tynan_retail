@@ -3,7 +3,7 @@ from sqlalchemy import delete
 from db_models import BusinessLine, ProductCategory, ProductInventory
 
 
-def delete_records_from_table(st_conn):
+def delete_records_from_table(session):
     table_data = st.radio("Select table to add data:",
                           options=["Business Line",
                                    "Product Category",
@@ -16,9 +16,8 @@ def delete_records_from_table(st_conn):
                            .where(BusinessLine.line_id.in_([record_input]))
                            )
             if st.form_submit_button("Submit"):
-                with st_conn.session as session:
-                    session.execute(delete_stmt)
-                    session.commit()
+                session.execute(delete_stmt)
+                session.commit()
     elif table_data == "Product Category":
         with st.form("Delete Record from Product Category", clear_on_submit=True):
             st.write("If prod_cat column in Table is blank, click 'Submit' button.")
@@ -27,9 +26,8 @@ def delete_records_from_table(st_conn):
                            .where(ProductCategory.prod_cat.in_([record_input]))
                            )
             if st.form_submit_button("Submit"):
-                with st_conn.session as session:
-                    session.execute(delete_stmt)
-                    session.commit()
+                session.execute(delete_stmt)
+                session.commit()
     elif table_data == "Product Inventory":
         with st.form("Delete Record from Product Inventory", clear_on_submit=True):
             st.write("If prod_id column in Table is blank, click 'Submit' button.")
@@ -38,8 +36,7 @@ def delete_records_from_table(st_conn):
                            .where(ProductInventory.prod_id.in_([record_input]))
                            )
             if st.form_submit_button("Submit"):
-                with st_conn.session as session:
-                    session.execute(delete_stmt)
-                    session.commit()
+                session.execute(delete_stmt)
+                session.commit()
 
 #

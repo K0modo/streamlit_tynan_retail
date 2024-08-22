@@ -9,12 +9,14 @@ sidebar_actions = ["View All Items",
 ]
 
 
-action = (st.sidebar.selectbox("Select Buyer Operations", sidebar_actions))
+def buyer_operations():
 
-if action == "View All Items":
-    st.write("View All Items")
-    view_cards.card_template(_st_conn)
-elif action == "View by Category":
-    st.write("View by Category")
-    select_category_line(_st_conn)
+    action = (st.sidebar.selectbox("Select Buyer Operations", sidebar_actions))
+
+    if action == "View All Items":
+        st.write("View All Items")
+        view_cards.card_template(_st_conn)
+    elif action == "View by Category":
+        st.write("View by Category")
+        select_category_line(_st_conn)
 

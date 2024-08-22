@@ -10,19 +10,19 @@ available_tables = ["Business Line",
                     "Product Business Line"]
 
 
-def view_tables(_st_conn):
+def view_tables(session):
 
     table = st.radio("Select table to view:", available_tables)
     if table == "Business Line":
         st.subheader("Business Line Table")
-        with _st_conn.session as session:
+        with session as session:
             result = session.execute(select(BusinessLine.line_id,
                                             BusinessLine.line_name)
                                      )
             st.dataframe(result, hide_index=True)
     elif table == "Product Inventory":
         st.subheader("Product Inventory")
-        with _st_conn.session as session:
+        with session as session:
             result = session.execute(select(ProductInventory.prod_id,
                                             ProductInventory.prod_name,
                                             ProductInventory.prod_price,
@@ -33,7 +33,7 @@ def view_tables(_st_conn):
             st.dataframe(result, hide_index=True)
     elif table == "Product Dimensions":
         st.subheader("Product Dimensions")
-        with _st_conn.session as session:
+        with session as session:
             result = session.execute(select(ProductInventory.prod_id,
                                             ProductInventory.prod_name,
                                             ProductInventory.prod_width,
@@ -43,7 +43,7 @@ def view_tables(_st_conn):
             st.dataframe(result, hide_index=True)
     elif table == "Product Category":
         st.subheader("Product Category")
-        with _st_conn.session as session:
+        with session as session:
             result = session.execute(select(ProductCategory.prod_cat,
                                             ProductCategory.cat_name,
                                             ProductCategory.line_id)
@@ -51,7 +51,7 @@ def view_tables(_st_conn):
             st.dataframe(result, hide_index=True)
     elif table == "Product Business Line":
         st.subheader("Product with Business Line Name")
-        with _st_conn.session as session:
+        with session as session:
             result = session.execute(select(ProductInventory.prod_id,
                                             ProductInventory.prod_name,
                                             ProductInventory.line_id,

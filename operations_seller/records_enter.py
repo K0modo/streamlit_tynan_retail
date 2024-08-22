@@ -7,7 +7,7 @@ from sqlalchemy import select
 # img = Image.open(current_dir / "product_photos" / "prod_001" / "IMG_3672_drafttable.jpg")
 
 
-def enter_records_to_table(st_conn):
+def enter_records_to_table(session):
     table_data = st.radio("Select table to add data:",
                           options=["Business Line",
                                    "Product Category",
@@ -23,9 +23,8 @@ def enter_records_to_table(st_conn):
                 if line_id_input == "":
                     return
                 else:
-                    with st_conn.session as session:
-                        session.add(add_record)
-                        session.commit()
+                    session.add(add_record)
+                    session.commit()
     elif table_data == "Product Category":
         with st.form("Add Category Data", clear_on_submit=True):
             prod_cat_input = st.text_input("prod_cat code : ")
@@ -39,16 +38,14 @@ def enter_records_to_table(st_conn):
                 if prod_cat_input == "" or cat_name_input == "":
                     return
                 else:
-                    with st_conn.session as session:
-                        session.add(add_record)
-                        session.commit()
-                        st.write(input_record)
-                    with st_conn.session as session:
-                        result = session.execute(select(ProductCategory.prod_cat,
-                                                        ProductCategory.cat_name,
-                                                        ProductCategory.line_id)
+                    session.add(add_record)
+                    session.commit()
+                    st.write(input_record)
+                    result = session.execute(select(ProductCategory.prod_cat,
+                                                    ProductCategory.cat_name,
+                                                    ProductCategory.line_id)
                                                  )
-                        st.dataframe(result, hide_index=True)
+                    st.dataframe(result, hide_index=True)
     elif table_data == "Product Inventory":
         with st.form("Add Product to Inventory", clear_on_submit=True):
             prod_name_input = st.text_input("prod_name: ")
@@ -68,14 +65,12 @@ def enter_records_to_table(st_conn):
                 if prod_name_input == "" :
                     return
                 else:
-                    with st_conn.session as session:
-                        session.add(add_record)
-                        session.commit()
-                        st.write(input_record)
-                    with st_conn.session as session:
-                        result = session.execute(select(ProductCategory.prod_cat,
-                                                        ProductCategory.cat_name,
-                                                        ProductCategory.line_id)
+                    session.add(add_record)
+                    session.commit()
+                    st.write(input_record)
+                    result = session.execute(select(ProductCategory.prod_cat,
+                                                    ProductCategory.cat_name,
+                                                    ProductCategory.line_id)
                                                  )
-                        st.dataframe(result, hide_index=True)
+                    st.dataframe(result, hide_index=True)
 

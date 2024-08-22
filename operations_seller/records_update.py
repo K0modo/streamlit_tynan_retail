@@ -2,7 +2,7 @@ import streamlit as st
 from db_models import BusinessLine, ProductCategory, ProductInventory
 from sqlalchemy import update, select, column
 
-def update_records_table(st_conn):
+def update_records_table(session):
     table_data = st.radio("Select table with record:",
                           options=["Business Line",
                                    "Product Category",
@@ -17,9 +17,8 @@ def update_records_table(st_conn):
                     .values(line_name=new_record)
                     )
             if st.form_submit_button("Submit"):
-                with st_conn.session as session:
-                    session.execute(stmt)
-                    session.commit()
+                session.execute(stmt)
+                session.commit()
     elif table_data == "Product Category":
         with st.form("Update Product Category", clear_on_submit=True):
             target_record = st.text_input("Target prod_cat to update : ")
@@ -29,9 +28,8 @@ def update_records_table(st_conn):
                     .values(cat_name=new_record)
                     )
             if st.form_submit_button("Submit"):
-                with st_conn.session as session:
-                    session.execute(stmt)
-                    session.commit()
+                session.execute(stmt)
+                session.commit()
     elif table_data == "Product Inventory":
         pass
         # with st.form("Update Product Inventory", clear_on_submit=True):
